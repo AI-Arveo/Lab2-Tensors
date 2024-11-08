@@ -22,7 +22,7 @@ class NeuralNetworkClassificationModel(torch.nn.Module):
 
         self.layer1 = nn.Sequential(
             nn.Linear(in_features=3, out_features=1),  # Klopt dit? Waar vind ik dit?
-            nn.ReLU()
+            nn.ReLU() # activation function
         )
         self.layer2 = nn.Sequential(
             nn.Linear(in_features=20, out_features=15),
@@ -31,7 +31,7 @@ class NeuralNetworkClassificationModel(torch.nn.Module):
 
         self.layer3 = nn.Sequential(
             nn.Linear(in_features=15, out_features=3),  # assuming 3 classes
-            nn.Softmax(dim=1)  # Softmax along the class dimension
+            nn.Softmax(dim=1)  # Softmax along the class dimension -> return/bereken de uitkomst
         )
         """END TODO"""
 

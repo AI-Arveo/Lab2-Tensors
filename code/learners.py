@@ -6,6 +6,7 @@ from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import Dataset, DataLoader
 
+import models
 from run_tensors import mse
 
 class Learner():
@@ -48,16 +49,19 @@ class RegressionLearner(Learner):
                 """START TODO: fill in the missing parts"""
 
                 # forward the size data through the model
+                modelData = self.model.forward(data)
 
                 # calculate the loss using the self-implemented mean squared error function
-                loss = torch.tensor([0])
+                # loss = torch.tensor([0])
+                loss = mse(modelData,targets)
 
                 # As mentioned before, the grads always needs to be zeroed before backprop (use your optimizer to do this)
-
+                self.optimizer.zero_grad()
                 # propagate the loss backward
-
+                #loss.backward(torch.ones_like(loss))
+                loss.backward()
                 # use your optimizer to perform an update step
-
+                self.optimizer.step()
                 """END TODO"""
 
                 train_loss += loss.item() * len(data)

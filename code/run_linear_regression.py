@@ -1,6 +1,7 @@
 import os
 import torch
 import matplotlib.pyplot as plt
+#import torch.optim
 
 from datasets import HousesDataset
 
@@ -9,6 +10,7 @@ from models import LinearRegressionModel
 from learners import RegressionLearner
 
 from utilities import plot_house_sizes_and_prices, plot_house_results, plot_training_process
+
 
 
 ## PARAMETERS
@@ -57,12 +59,10 @@ train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size)
 """START TODO: fill in the missing parts"""
 
 # create an instance of the linear regression model
-
-model = None
+model = LinearRegressionModel()
 
 # define an opimizer to fit the model (see https://pytorch.org/docs/stable/optim.html)
-
-optimizer = None
+optimizer = torch.optim.SGD(model.parameters(),lr=0.5,momentum=0.9)
 
 """END TODO"""
 
