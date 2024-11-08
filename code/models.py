@@ -22,17 +22,17 @@ class NeuralNetworkClassificationModel(torch.nn.Module):
         """ START TODO: fill in all three layers. Remember that each layer should contain 2 parts, a linear transformation and a nonlinear activation function."""
 
         self.layer1 = nn.Sequential(
-            nn.Linear(in_features=1, out_features=1),  # Klopt dit? Waar vind ik dit?
-            nn.ReLU() # activation function
+            #nn.Linear(in_features=1, out_features=1),  # Klopt dit? Waar vind ik dit?
+            self.nn.Linear(in_features=1, out_features=1) # activation function
         )
         self.layer2 = nn.Sequential(
-            nn.Linear(in_features=20, out_features=15),
-            nn.ReLU()
+            #nn.Linear(in_features=1, out_features=1),
+            self.nn.ELU() #alpha => Default: 1.0
         )
 
         self.layer3 = nn.Sequential(
-            nn.Linear(in_features=15, out_features=3),  # assuming 3 classes
-            nn.Softmax(dim=1)  # Softmax along the class dimension -> return/bereken de uitkomst
+            #nn.Linear(in_features=15, out_features=3),  # assuming 3 classes
+            self.nn.Softmax(dim=1)  # Softmax along the class dimension -> dimension along which Softmax will be computed(so every slice along dim will sum to 1).
         )
         """END TODO"""
 

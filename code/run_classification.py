@@ -70,7 +70,7 @@ plot_images_and_labels(sample_data, sample_targets)
 
 # create an instance of the classifier model
 
-model = None
+model = NeuralNetworkClassificationModel()
 
 # create an instance of an appropriate criterion (loss function) (see https://pytorch.org/docs/stable/nn.html#loss-functions)
 
