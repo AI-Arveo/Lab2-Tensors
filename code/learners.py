@@ -91,19 +91,21 @@ class RegressionLearner(Learner):
         test_loss = 0
 
         """START TODO: fill in the missing parts"""
-        for data, targets in dataset:
-            data = data.to(device)
-            targets = targets.to(device)
-            # forward the data through the model
-            testData = self.model.forward(data)
-            # calculate the loss using the self-implemented mean squared error function
-            test_loss = mse(testData,targets).item() #* len(data)
-            # calculate the root mean squared error for the dataset
-            RootMeanSquaredError = math.sqrt(mse(testData,targets).item())
-            print(RootMeanSquaredError)
+        # for data, targets in dataset:
+        #     data = data.to(device)
+        #     targets = targets.to(device)
+        # forward the data through the model
+        #print('data: '+str(list(dataset)))
+        data = dataset.data.to(device)
+        target = dataset.targets.to(device)
+        testData = self.model.forward(data)
+        # calculate the loss using the self-implemented mean squared error function
+        test_loss = mse(testData,target) #* len(data)
+        # calculate the root mean squared error for the dataset
+        RootMeanSquaredError = math.sqrt(test_loss)
         """END TODO"""
 
-        return test_loss
+        return RootMeanSquaredError
 
     @torch.no_grad()
     def predict(self, dataset, device):
