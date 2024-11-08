@@ -1,10 +1,4 @@
 import torch
-
-
-class LinearRegressionModel(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        """START TODO: define a linear layer"""import torch
 from torch import nn
 
 

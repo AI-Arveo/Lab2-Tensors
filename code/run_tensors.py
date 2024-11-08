@@ -34,8 +34,7 @@ def create_image() -> torch.Tensor:
 
 def lin_layer_forward(weights: torch.Tensor, random_image: torch.Tensor) -> torch.Tensor:
     """TODO: implement this method"""
-    inj = weights.transpose(0,0) * random_image
-    return inj
+    return torch.dot(weights, random_image)
 
 
 def tensor_network():
@@ -44,8 +43,6 @@ def tensor_network():
     plot_tensor(target, "Target")
 
     input_tensor = torch.FloatTensor([0.4, 0.8, 0.5, 0.3])
-
-
     weights = torch.FloatTensor([0.1, -0.5, 0.9, -1])
     """START TODO:  Ensure that the tensor 'weights' saves the computational graph and the gradients after backprop"""
     weights.requires_grad = True
@@ -68,12 +65,13 @@ def tensor_network():
     print(f"The current weights are: {weights}")
 
     """START TODO: the loss needs to be backpropagated"""
-    
+    loss.backward(torch.ones_like(loss))
     """END TODO"""
 
     print(f"The gradients are: {weights.grad}")
     """START TODO: implement the update step with a learning rate of 0.5"""
-    
+    weights = weights - 0.5 * weights.grad
+    #Input Function - Activation function * Output
     """END TODO"""
     print(f"The new weights are: {weights}\n")
 
