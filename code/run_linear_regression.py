@@ -15,13 +15,16 @@ from utilities import plot_house_sizes_and_prices, plot_house_results, plot_trai
 
 ## PARAMETERS
 
-random_seed = 1
+random_seed = 2
 
-batch_size = 32
+#een batch is een subset van de dataset. Hoe kleiner je batch hoe nauwkeuriger je gaat trainen
+#hoe groter je batch hoe algemener je gaat trainen
+batch_size = 5
 
-epochs = 10
+#hoeveel keer dat je die door de data laat trainen
+epochs = 15
 
-learning_rate = 0.25
+learning_rate = 0.00001
 
 ## INITIALISATION
 
@@ -62,7 +65,7 @@ train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size)
 model = LinearRegressionModel()
 
 # define an opimizer to fit the model (see https://pytorch.org/docs/stable/optim.html)
-optimizer = torch.optim.SGD(model.parameters(),lr=0.5,momentum=0.9)
+optimizer = torch.optim.SGD(model.parameters(),lr=learning_rate,momentum=0.9)
 
 """END TODO"""
 
@@ -85,6 +88,7 @@ plot_training_process(train_losses, [])
 
 # load the best version of the model parameters
 learner.load("leader")
+#learner.load("LinearRegressionModel_final")
 
 # evaluate the model on the train dataset
 train_loss = learner.test(train_dataset, device)

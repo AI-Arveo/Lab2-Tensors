@@ -6,7 +6,8 @@ class LinearRegressionModel(torch.nn.Module):
     def __init__(self):
         super().__init__()
         """START TODO: define a linear layer"""
-        linear_layer = nn.Linear(in_features=3, out_features=1)
+        # in_features is 1 omdat je bij datasets ziet dat de huis_prijs enkel afhankelijk is van de huis_size
+        self.linear_layer = nn.Linear(in_features=1, out_features=1)
         """END TODO"""
 
     def forward(self, x: torch.Tensor):

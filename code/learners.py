@@ -22,7 +22,8 @@ class Learner():
         torch.save(self.model.state_dict(), os.path.join("checkpoints", self.model.__class__.__name__ + "_" + label))
 
     def load(self, label):
-        self.model.load_state_dict(torch.load(os.path.join("checkpoints", self.model.__class__.__name__ + "_" + label), weights_only=True))
+        self.model.load_state_dict(torch.load(os.path.join("checkpoints",self.model.__class__.__name__ +"_" +label), weights_only=True))
+        #self.model.__class__.__name__ +"_" +
     
 
 class RegressionLearner(Learner):
@@ -47,7 +48,6 @@ class RegressionLearner(Learner):
                 targets = targets.to(device)
 
                 """START TODO: fill in the missing parts"""
-
                 # forward the size data through the model
                 modelData = self.model.forward(data)
 
