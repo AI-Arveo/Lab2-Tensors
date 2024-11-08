@@ -146,13 +146,12 @@ class ClassificationLearner(Learner):
                 trainData = self.model.forward(data)
                 # calculate the loss
                 loss = torch.tensor([0])
-
                 # set all gradients to zero
-                    
+                self.optimizer.zero_grad()
                 # propagate the loss backwards
-
+                loss.backward()
                 # use your optimizer to perform an update step
-
+                self.optimizer.step()
                 """END TODO"""
 
                 train_loss += loss.item() * len(data)
@@ -197,21 +196,28 @@ class ClassificationLearner(Learner):
 
         """START TODO: fill in the missing parts"""
 
-        #process the data in batches
-        for data, targets in dataloader:
-            data = data.to(device)
-            targets = targets.to(device)
-            # forward the data through the model
-            modelData = self.model.forward(dataloader.dataset)
-            # calculate the loss
-            loss = torch.tensor([0])
-            # predict the labels
+        def _evaluate(self, dataloader, device):
+            eval_loss = 0
+            eval_accuracy = 0
 
+            """START TODO: fill in the missing parts"""
+            data = dataloader.data.to(device)
+            target = dataloader.targets.to(device)
+
+            # process the data in batches
+
+            # forward the data through the model
+            modelData = self.model.forward(data)
+            # Calculate the loss
+            loss = self.criterion(modelData, target)
+
+            # Predict the labels
+            _, predicted_labels = torch.max(modelData, dim=1)
 
             # calculate the evaluation loss and accuracy for a batch
-        
+
             # calculate the evaluation loss and accuracy for the dataset
 
-        """END TODO"""
+            """END TODO"""
 
-        return (eval_loss, eval_accuracy)
+            return (eval_loss, eval_accuracy)

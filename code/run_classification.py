@@ -1,5 +1,6 @@
 import torch
 import torchvision
+from torch import nn, optim
 
 from models import NeuralNetworkClassificationModel, NeuralNetworkClassificationModelWithVariableLayers
 
@@ -74,11 +75,11 @@ model = NeuralNetworkClassificationModel()
 
 # create an instance of an appropriate criterion (loss function) (see https://pytorch.org/docs/stable/nn.html#loss-functions)
 
-criterion = None
+criterion = nn.MSELoss()
 
 # define an optimizer to train the model parameters (see https://pytorch.org/docs/stable/optim.html)
 
-optimizer = None
+optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
 
 """END TODO"""
 
