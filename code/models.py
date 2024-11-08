@@ -22,7 +22,7 @@ class NeuralNetworkClassificationModel(torch.nn.Module):
         """ START TODO: fill in all three layers. Remember that each layer should contain 2 parts, a linear transformation and a nonlinear activation function."""
 
         self.layer1 = nn.Sequential(
-            nn.Linear(in_features=3, out_features=1),  # Klopt dit? Waar vind ik dit?
+            nn.Linear(in_features=1, out_features=1),  # Klopt dit? Waar vind ik dit?
             nn.ReLU() # activation function
         )
         self.layer2 = nn.Sequential(

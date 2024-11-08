@@ -91,13 +91,16 @@ class RegressionLearner(Learner):
         test_loss = 0
 
         """START TODO: fill in the missing parts"""
-
-        # forward the data through the model
-            
-        # calculate the loss using the self-implemented mean squared error function
-        
-        # calculate the root mean squared error for the dataset
-
+        for data, targets in dataset:
+            data = data.to(device)
+            targets = targets.to(device)
+            # forward the data through the model
+            testData = self.model.forward(data)
+            # calculate the loss using the self-implemented mean squared error function
+            test_loss = mse(testData,targets).item() #* len(data)
+            # calculate the root mean squared error for the dataset
+            RootMeanSquaredError = math.sqrt(mse(testData,targets).item())
+            print(RootMeanSquaredError)
         """END TODO"""
 
         return test_loss
@@ -138,7 +141,7 @@ class ClassificationLearner(Learner):
                 """START TODO: fill in the missing parts"""
 
                 # forward the data through the model
-
+                trainData = self.model.forward(data)
                 # calculate the loss
                 loss = torch.tensor([0])
 
@@ -193,16 +196,19 @@ class ClassificationLearner(Learner):
         """START TODO: fill in the missing parts"""
 
         #process the data in batches
+        for data, targets in dataloader:
+            data = data.to(device)
+            targets = targets.to(device)
+            # forward the data through the model
+            modelData = self.model.forward(dataloader.dataset)
+            # calculate the loss
+            loss = torch.tensor([0])
+            # predict the labels
 
-        # forward the data through the model
-            
-        # calculate the loss 
-            
-        # predict the labels
 
-        # calculate the evaluation loss and accuracy for a batch
+            # calculate the evaluation loss and accuracy for a batch
         
-        # calculate the evaluation loss and accuracy for the dataset
+            # calculate the evaluation loss and accuracy for the dataset
 
         """END TODO"""
 
