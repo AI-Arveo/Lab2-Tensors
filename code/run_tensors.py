@@ -19,13 +19,14 @@ def plot_rgb_tensor(to_plot: torch.Tensor, title: str):
 
 def mse(input_tensor: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
     """TODO: implement this method"""
-    return torch.sub(input_tensor,target).square().sum().mean()
+    return torch.sub(input_tensor,target).square().mean()
 
 def create_image() -> torch.Tensor:
     """TODO: implement this method"""
-    red_channel = [[0.5021,0.1138,0.9047],[0.8017,0.8733,0.6258]]
-    green_channel = [[0.2843,0.0684,0.6829],[0.5914,0.6004,0.2893]]
-    blue_channel = [[0.1935,0.5483,0.3117],[0.7038,0.5983,0.9914]]
+    weights_only = True
+    red_channel = [[0.5021, 0.2843, 0.1935],[0.8017, 0.5914, 0.7038]]
+    green_channel = [[0.1138, 0.0684, 0.5483],[0.8733, 0.6004, 0.5983]]
+    blue_channel = [[0.9047, 0.6829, 0.3117],[0.6258, 0.2893, 0.9914]]
     rgb = [red_channel,green_channel,blue_channel]
     image = torch.FloatTensor(rgb)
     return image
@@ -47,7 +48,7 @@ def tensor_network():
 
     weights = torch.FloatTensor([0.1, -0.5, 0.9, -1])
     """START TODO:  Ensure that the tensor 'weights' saves the computational graph and the gradients after backprop"""
-    
+    weights.requires_grad = True
     """END TODO"""
 
     # remember the activation a of a unit is calculated as follows:

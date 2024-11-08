@@ -42,6 +42,7 @@ def test_image_matrix():
     else:
         good_image = torch.load("images/create_image_tensor.pt")
         plot_rgb_tensor(good_image, "Target")
+        print(good_image)
         plot_rgb_tensor(created_image, "Yours")
         if torch.equal(good_image, created_image):
             print("create_image implemented correctly! (1/1)")
