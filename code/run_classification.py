@@ -18,7 +18,7 @@ batch_size_test = 1000
 
 epochs = 5
 
-learning_rate = 0.01
+learning_rate = 0.0001
 
 ## INITIALISATION
 
@@ -75,11 +75,11 @@ model = NeuralNetworkClassificationModel()
 
 # create an instance of an appropriate criterion (loss function) (see https://pytorch.org/docs/stable/nn.html#loss-functions)
 
-criterion = nn.MSELoss()
+criterion = torch.nn.CrossEntropyLoss()
 
 # define an optimizer to train the model parameters (see https://pytorch.org/docs/stable/optim.html)
 
-optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+optimizer = torch.optim.SGD(model.parameters(),lr=learning_rate,momentum=0.9)
 
 """END TODO"""
 

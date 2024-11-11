@@ -24,6 +24,15 @@ batch_size = 5
 #hoeveel keer dat je die door de data laat trainen
 epochs = 15
 
+# Als je de learning_rate te groot neemt moet je al heel wat batches hebben om het trackable (cijfers te groot
+# voor 4 bytes) te maken => nan
+# squared error zorgt voor het kwadrateren van de fouten => in het begin is het zeer random => grote fouten
+# => grote fout kwadrateren = heel groot getal => nan
+# een oplossing is om de root mean square te nemen
+# waarom toch niet root mean square gebruiken?
+# - geen negatieve waarde
+# - allebei minimaal op hetzelfde punt
+# - mse geeft meer gewicht aan grote fouten door de square en minder aan kleine fouten = goed
 learning_rate = 0.00001
 
 ## INITIALISATION

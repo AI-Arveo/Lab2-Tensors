@@ -102,7 +102,8 @@ class RegressionLearner(Learner):
         # calculate the loss using the self-implemented mean squared error function
         test_loss = mse(testData,target) #* len(data)
         # calculate the root mean squared error for the dataset
-        RootMeanSquaredError = math.sqrt(test_loss)
+        # RootMeanSquaredError = math.sqrt(test_loss)
+        RootMeanSquaredError = math.sqrt(test_loss.item() * len(data) / len(dataset))
         """END TODO"""
 
         return RootMeanSquaredError
@@ -143,11 +144,15 @@ class ClassificationLearner(Learner):
                 """START TODO: fill in the missing parts"""
 
                 # forward the data through the model
-                trainData = self.model.forward(data)
+                train_data = self.model.forward(data)
                 # calculate the loss
-                loss = torch.tensor([0])
+                # flatten de dimension van train_data
+                if train_data.dim() > 2:
+                    train_data = train_data.view(train_data.size(0), -1)
+                loss = self.criterion(train_data,targets)
+                #loss = mse(train_data,targets) # is niet zo goed voor classification
                 # set all gradients to zero
-                self.optimizer.zero_grad()
+                self.model.zero_grad()
                 # propagate the loss backwards
                 loss.backward()
                 # use your optimizer to perform an update step
@@ -202,20 +207,25 @@ class ClassificationLearner(Learner):
 
             """START TODO: fill in the missing parts"""
             data = dataloader.data.to(device)
-            target = dataloader.targets.to(device)
+            targets = dataloader.targets.to(device)
 
             # process the data in batches
 
             # forward the data through the model
             modelData = self.model.forward(data)
-            # Calculate the loss
-            loss = self.criterion(modelData, target)
-
-            # Predict the labels
-            _, predicted_labels = torch.max(modelData, dim=1)
-
+            # calculate the loss
+            print("modelData:"+str(modelData))
+            print("targets:"+str(targets))
+            if modelData.dim() > 2:
+                modelData = modelData.view(modelData.size(0), -1)
+            loss = self.criterion(modelData,targets)
+            # predict the labels
+            # we gaan dus de class nemen met de grootste kans
+            # dim = 1 betekent dat alle kansen opgeteld 1 moet zijn => 100%
+            _,predicted = torch.max(modelData,dim=1)
+            print('predict: '+str(predicted))
             # calculate the evaluation loss and accuracy for a batch
-
+            
             # calculate the evaluation loss and accuracy for the dataset
 
             """END TODO"""
