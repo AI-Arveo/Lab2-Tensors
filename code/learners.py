@@ -198,36 +198,34 @@ class ClassificationLearner(Learner):
     def _evaluate(self, dataloader, device):
         eval_loss = 0
         eval_accuracy = 0
+        total_samples = 0  # To track the total number of samples
 
-        """START TODO: fill in the missing parts"""
+        # Process the data in batches
+        for data, targets in dataloader:
+            data = data.to(device)
+            targets = targets.to(device)
 
-        def _evaluate(self, dataloader, device):
-            eval_loss = 0
-            eval_accuracy = 0
+            # Forward pass
+            modelData = self.model(data)
 
-            """START TODO: fill in the missing parts"""
-            data = dataloader.data.to(device)
-            targets = dataloader.targets.to(device)
-
-            # process the data in batches
-
-            # forward the data through the model
-            modelData = self.model.forward(data)
-            # calculate the loss
-            print("modelData:"+str(modelData))
-            print("targets:"+str(targets))
+            # Calculate loss for the batch
             if modelData.dim() > 2:
                 modelData = modelData.view(modelData.size(0), -1)
-            loss = self.criterion(modelData,targets)
-            # predict the labels
-            # we gaan dus de class nemen met de grootste kans
-            # dim = 1 betekent dat alle kansen opgeteld 1 moet zijn => 100%
-            _,predicted = torch.max(modelData,dim=1)
-            print('predict: '+str(predicted))
-            # calculate the evaluation loss and accuracy for a batch
-            
-            # calculate the evaluation loss and accuracy for the dataset
+            loss = self.criterion(modelData, targets)
 
-            """END TODO"""
+            # Accumulate the loss and the number of samples
+            eval_loss += loss.item() * len(data)
 
-            return (eval_loss, eval_accuracy)
+            # Predict labels (get the class with the highest score)
+            _, predicted = torch.max(modelData, dim=1)
+
+            # Calculate the number of correct predictions
+            correct = (predicted == targets).sum().item()
+            eval_accuracy += correct
+            total_samples += len(data)
+
+        # Calculate average loss and accuracy for the entire dataset
+        eval_loss /= total_samples
+        eval_accuracy /= total_samples
+
+        return eval_loss, eval_accuracy
