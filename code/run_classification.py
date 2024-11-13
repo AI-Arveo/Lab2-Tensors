@@ -16,7 +16,7 @@ random_seed = 1
 batch_size_train = 200#64
 batch_size_test = 200
 
-epochs = 10
+epochs = 15
 
 learning_rate = 0.1
 
