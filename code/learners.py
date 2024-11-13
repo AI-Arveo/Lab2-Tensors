@@ -146,7 +146,6 @@ class ClassificationLearner(Learner):
                 # forward the data through the model
                 train_data = self.model(data)
                 # calculate the loss
-                # flatten de dimension van train_data
                 loss = self.criterion(train_data,targets)
                 #loss = mse(train_data,targets) # is niet zo goed voor classification
                 # set all gradients to zero
