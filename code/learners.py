@@ -144,15 +144,13 @@ class ClassificationLearner(Learner):
                 """START TODO: fill in the missing parts"""
 
                 # forward the data through the model
-                train_data = self.model.forward(data)
+                train_data = self.model(data)
                 # calculate the loss
                 # flatten de dimension van train_data
-                if train_data.dim() > 2:
-                    train_data = train_data.view(train_data.size(0), -1)
                 loss = self.criterion(train_data,targets)
                 #loss = mse(train_data,targets) # is niet zo goed voor classification
                 # set all gradients to zero
-                self.model.zero_grad()
+                self.optimizer.zero_grad()
                 # propagate the loss backwards
                 loss.backward()
                 # use your optimizer to perform an update step
@@ -209,8 +207,6 @@ class ClassificationLearner(Learner):
             modelData = self.model(data)
 
             # Calculate loss for the batch
-            if modelData.dim() > 2:
-                modelData = modelData.view(modelData.size(0), -1)
             loss = self.criterion(modelData, targets)
 
             # Accumulate the loss and the number of samples

@@ -14,9 +14,9 @@ from utilities import plot_images_and_labels, plot_training_process
 random_seed = 1
 
 batch_size_train = 64
-batch_size_test = 1000
+batch_size_test = 200
 
-epochs = 10
+epochs = 5
 
 learning_rate = 0.0001
 
