@@ -16,33 +16,42 @@ class LinearRegressionModel(torch.nn.Module):
         """END TODO"""
 
 
-class NeuralNetworkClassificationModel(torch.nn.Module):
+class NeuralNetworkClassificationModel(nn.Module):
     def __init__(self):
         super().__init__()
-        """ START TODO: fill in all three layers. Remember that each layer should contain 2 parts, a linear transformation and a nonlinear activation function."""
+
+        # Convolutional layers
         self.layer1 = nn.Sequential(
-            #nn.Linear(in_features=1, out_features=1),  # Klopt dit? Waar vind ik dit?
-            nn.Linear(in_features=784, out_features=256), # activation function
-            nn.ReLU()
+            nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, stride=1, padding=1),  # First conv layer
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)  # Downsampling by 2x
         )
+
         self.layer2 = nn.Sequential(
-            nn.Linear(in_features=256, out_features=64),
-            nn.ReLU() #alpha => Default: 1.0
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, stride=1, padding=1),  # Second conv layer
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)
         )
 
-        self.layer3 = nn.Sequential(
-            nn.Linear(in_features=64, out_features=10),  # assuming 3 classes
-            nn.Softmax(dim=1)  # Softmax along the class dimension -> dimension along which Softmax will be computed(so every slice along dim will sum to 1).
-        )
-        """END TODO"""
+        # Fully connected layers
+        self.fc1 = nn.Linear(in_features=64 * 7 * 7, out_features=128)
+        self.fc2 = nn.Linear(in_features=128, out_features=64)
+        self.fc3 = nn.Linear(in_features=64, out_features=10)
 
-    def forward(self, x: torch.Tensor):
-        """START TODO: forward tensor x through all layers."""
-        x = self.layer1(x.flatten(1))
+    def forward(self, x):
+        # Forward pass through convolutional layers
+        x = self.layer1(x)
         x = self.layer2(x)
-        x = self.layer3(x)
-        """END TODO"""
-        return x
+
+        # Flatten before passing through fully connected layers
+        x = x.view(x.size(0), -1)
+
+        # Fully connected layers
+        x = self.fc1(x)
+        x = self.fc2(x)
+        x = self.fc3(x)
+
+        return nn.Softmax(dim=1)(x)
 
 
 class NeuralNetworkClassificationModelWithVariableLayers(torch.nn.Module):
