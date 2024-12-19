@@ -33,8 +33,7 @@ epochs = 15
 # - geen negatieve waarde
 # - allebei minimaal op hetzelfde punt
 # - mse geeft meer gewicht aan grote fouten door de square en minder aan kleine fouten = goed
-learning_rate = 0.00001
-
+learning_rate = 0.000001
 ## INITIALISATION
 
 # manually set seeds for random number generators --> ensures reproducibility of results
@@ -123,6 +122,8 @@ plot_house_results(train_dataset.data, train_dataset.targets, train_results, lin
 
 plot_house_results(test_dataset.data, test_dataset.targets, test_results, linear_sizes, linear_prices, linear_results, title="Performance on test dataset")
 
+#print(f"unknown function: f(x) = 5000 * x + 100 000 + {test_dataset.noise_house_price} * N(0, 1).")
 print(f"unknown function: f(x) = 5000 * x + 100 000 + {test_dataset.noise_house_price} * N(0, 1).")
+
 print(f"learned function: g(x) = {model.linear_layer.weight.data[0].item()} * x + {model.linear_layer.bias.data[0].item()}")
 print()

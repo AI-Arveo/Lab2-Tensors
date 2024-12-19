@@ -70,7 +70,7 @@ def tensor_network():
 
     print(f"The gradients are: {weights.grad}")
     """START TODO: implement the update step with a learning rate of 0.5"""
-    weights = weights - 0.5 * weights.grad
+    weights = weights - 0.50 * weights.grad
     #Input Function - Activation function * Output
     """END TODO"""
     print(f"The new weights are: {weights}\n")
